@@ -39,9 +39,9 @@ class ConnectFour{
 						System.out.println("IO error!");
 						System.exit(1);
 					}
-//System.out.println(input + " " + quit + " " + input.length() + " " + (input.equals("quit")));
+
 				}  while( !(input.equals("quit") || input.equals("n") || input.equals("y")) );
-//System.out.println("k");
+
 				if( input.equals("quit") || input.equals("n") ){
 					quit = true;
 					break;					
@@ -188,9 +188,7 @@ class CFBoard{
 				else
 					System.out.print(" ");
 				
-//				if( c < BOARD_SIZE - 1 )
-//				if( c < BOARD_SIZE )
-					System.out.print("|");
+				System.out.print("|");
 
 			}
 			System.out.println();
@@ -298,15 +296,6 @@ class CFBoard{
 					else if( chain_length(tempCo, tempCo2) >= 4 ){
 						redFourIAR.add( tempCo );
 					}
-else{
-	System.out.println("Problem - redTwoIAR : " + chain_length(tempCo, tempCo2));
-/*
-					if( chain_length(tempCo, tempCo2) == 2 ){
-						redTwoIAR.add( new Coord[]{tempCo, tempCo2} );
-						redTwoIAR.add( new Coord[]{tempCo2, tempCo} );
-					}
-*/
-}
 				}
 				if( pairs[1].get_row() == moveMade.get_row() && pairs[1].get_col() == moveMade.get_col() ){
 					tempCo = opposite_side(pairs[1], pairs[0]);
@@ -475,8 +464,6 @@ else{
 
 		}
 
-//System.out.println("_" + first.get_row() + " " + first.get_col() + " , " + second.get_row() + " " + second.get_col() + "___"+result);
-
 		return result;
 
 	}
@@ -632,14 +619,9 @@ else{
 				for( Coord[] triples : blackThreeIAR ){
 
 					if( heights[triples[0].get_col()] == triples[0].get_row() ){
-					//if( triples[0].equals(new Coord
 						priorities.add(triples[0].get_col());
-//System.out.println("Going for win : " + triples[0].get_col() + " _ trip row" + triples[0].get_row() + " , height " + heights[triples[0].get_row()]);
 					}
-/*
-					if( heights[triples[1].get_row()] == triples[1].get_col() )
-						priorities.add(triples[1].get_col());
-*/
+
 				}
 			}
 			
@@ -653,10 +635,7 @@ else{
 
 					if( heights[triples[0].get_col()] == triples[0].get_row() )
 						priorities.add(triples[0].get_col());
-/*
-					if( heights[triples[1].get_row()] == triples[1].get_col() )
-						priorities.add(triples[1].get_col());
-*/
+
 				}
 			}
 
@@ -683,10 +662,7 @@ else{
 						if( !skip )
 							priorities.add(pairs[0].get_col());
 					}
-/*
-					if( heights[triples[1].get_row()] == triples[1].get_col() )
-						priorities.add(triples[1].get_col());
-*/
+
 				}
 			}
 
@@ -722,10 +698,7 @@ else{
 
 						}
 					}
-/*
-					if( heights[triples[1].get_row()] == triples[1].get_col() )
-						priorities.add(triples[1].get_col());
-*/
+
 				}
 			}
 
@@ -733,13 +706,6 @@ else{
 			if( success )
 				return success;
 	
-
-		//RAND
-		//FIX LOGIC
-/*
-			for( int i = 0; i < BOARD_SIZE; i++ )
-				priorities.add(i);
-*/
 
 			ArrayList<Integer> lastResort = new ArrayList<Integer>();
 			ArrayList<Integer> undesirable = new ArrayList<Integer>();
@@ -842,7 +808,6 @@ else{
 				System.out.println(attempt+1);
 				success = make_move(attempt);
 				if( success ) {
-//					System.out.println("BLACK'S TURN : " + attempt);
 					return success;
 				}
 				else

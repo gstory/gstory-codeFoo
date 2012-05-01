@@ -52,6 +52,7 @@ class ConnectFour{
 
 		System.out.println();
 		System.out.println("Thanks for playing!");
+		System.out.println();
 
 	}
 
