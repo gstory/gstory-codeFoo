@@ -12,11 +12,12 @@ class ConnectFour{
 		boolean repeat = false;
 
 		System.out.println();System.out.println();System.out.println();System.out.println();
-		System.out.println("Welcome to ConnectFour! \nColumn numbers are listed above and below the game board. \nJust enter the column number to make a move.\nEnter quit at any time to quit.\n\nEnter \"-p\" to toggle between playing against the computer and a human player or press any other key to continue.");
+		System.out.println("Welcome to ConnectFour! \nColumn numbers are listed above and below the game board. \nJust enter the column number to make a move.\nEnter quit at any time to quit.\n");
 
 		String input = "-p";
 
 		while( input.equals("-p") ){
+			System.out.print("\nEnter \"-p\" to toggle between playing against the computer and a human player or press any other key to continue. ");
 			try{
 				input = b.readLine();
 			}catch (IOException ioe) {
@@ -104,7 +105,7 @@ class ConnectFour{
 
 		while( !my_board.game_over() ){
 		
-//			my_board.print_debugging();
+			my_board.print_debugging();
 			my_board.print_board();
 
 			if( my_board.get_turn() == 1 || twoP ){
@@ -503,8 +504,10 @@ class CFBoard{
 
 	private boolean is_gap(Coord first, Coord second){
 
-		if( get(first) != 1 || get(first) != -1 )
+		if( get(first) == 1 || get(first) == -1 ){
+
 			return false;
+		}
 
 		Coord val;
 		Coord mov;
@@ -538,10 +541,14 @@ class CFBoard{
 
 		mov = new Coord(mov.get_row() + row_offset, mov.get_col() + col_offset);
 
-		if( mov.get_row() >= 0 && mov.get_col() >= 0 && mov.get_row() < BOARD_SIZE && mov.get_col() < BOARD_SIZE && get(mov) == compar )
+		if( mov.get_row() >= 0 && mov.get_col() >= 0 && mov.get_row() < BOARD_SIZE && mov.get_col() < BOARD_SIZE && get(mov) == compar ){
+
 			return true;
-		else 
+		}
+		else {
+
 			return false;
+		}
 
 	}
 
@@ -677,18 +684,46 @@ class CFBoard{
 				return success;
 
 
+			for( Coord[] redPair : redTwoIAR ){
+				if( heights[redPair[0].get_col()] == redPair[0].get_row() ){
+					if( is_gap( redPair[0], redPair[1] ) ){
+
+						priorities.add(0, redPair[0].get_col());
+					}
+				}
+			}
+
+			success = try_move( priorities );
+			if( success )
+				return success;
+
+
+
 
 		//TWO
 			if( blackTwoIAR.size() != 0 ){
 				for( Coord[] pairs : blackTwoIAR ){
 
 					if( heights[pairs[0].get_col()] == pairs[0].get_row() ){
+
+						if( is_gap( pairs[0], pairs[1] ) ){
+							priorities.add(0, pairs[0].get_col());
+						}
 						skip = false;
 
 						for( Coord[] redTriple : redThreeIAR ){
 
 							if( heights[pairs[0].get_col()] + 1 == redTriple[0].get_row() )
 								skip = true;
+
+						}
+
+						for( Coord[] redPair : redTwoIAR ){
+
+							if( heights[pairs[0].get_col()] + 1 == redPair[0].get_row() && is_gap( redPair[0], redPair[1] ) ){
+
+								skip = true;
+							}
 
 						}
 
@@ -712,7 +747,7 @@ class CFBoard{
 		
 						if( is_gap( redPairs[0], redPairs[1] ) ){
 
-							priorities.add(redPairs[0].get_col());
+							priorities.add(0, redPairs[0].get_col());
 
 						}
 						else{
@@ -754,7 +789,8 @@ class CFBoard{
 				for( Coord[] redPair : redTwoIAR ){
 					if( heights[4] + 1 == redPair[0].get_row() && !lastResort.contains(4) ){
 						if( is_gap( redPair[0], redPair[1] ) ){
-							priorities.add(redPair[0].get_col());
+
+							priorities.add(0, redPair[0].get_col());
 						}
 						else{
 							undesirable.add(4);
@@ -780,7 +816,8 @@ class CFBoard{
 				for( Coord[] redPair : redTwoIAR ){
 					if( heights[3] + 1 == redPair[0].get_row() && !lastResort.contains(4) ){
 						if( is_gap( redPair[0], redPair[1] ) ){
-							priorities.add(redPair[0].get_col());
+
+							priorities.add(0, redPair[0].get_col());
 						}
 						else{
 							undesirable.add(3);
@@ -805,13 +842,14 @@ class CFBoard{
 						lastResort.add(num);
 				}
 				for( Coord[] redPair : redTwoIAR ){
-					if( heights[num] + 1 == redPair[0].get_row() && !lastResort.contains(num) )
+					if( heights[num] + 1 == redPair[0].get_row() && !lastResort.contains(num) ){
 						if( is_gap( redPair[0], redPair[1] ) ){
-							priorities.add(num);
+							lastResort.add(num);
 						}
 						else{
 							undesirable.add(num);
 						}
+					}
 				}
 
 				if( !lastResort.contains(num) && !undesirable.contains(num) )
