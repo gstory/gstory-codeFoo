@@ -4,6 +4,7 @@ import java.io.*;
 class ConnectFour{
 
 	public static boolean quit = false;
+	public static boolean twop = false;
 
 	public static void main(String args[]){
 
@@ -11,27 +12,49 @@ class ConnectFour{
 		boolean repeat = false;
 
 		System.out.println();System.out.println();System.out.println();System.out.println();
-		System.out.println("Welcome to ConnectFour! \nColumn numbers are listed above and below the game board. \nJust enter the column number to make a move.\nEnter quit at any time to quit.");
+		System.out.println("Welcome to ConnectFour! \nColumn numbers are listed above and below the game board. \nJust enter the column number to make a move.\nEnter quit at any time to quit.\n\nEnter \"-p\" to toggle between playing against the computer and a human player or press any other key to continue.");
+
+		String input = "-p";
+
+		while( input.equals("-p") ){
+			try{
+				input = b.readLine();
+			}catch (IOException ioe) {
+				System.out.println("IO error!");
+				System.exit(1);
+			}
+			if( input.equals("-p") ){
+				if( twop ){
+					System.out.println("Two Player mode disabled.");
+					twop = false;
+				}
+				else{
+					System.out.println("Two Player mode enabled.");
+					twop = true;
+				}
+			}
+		}
 
 		while( !quit ){
 			System.out.println();
 			System.out.println("Starting new game.");
 			System.out.println();
 
-			CFBoard game = play_game(b);
+			CFBoard game = play_game(b, twop);
 			game.print_board();
 
 			System.out.println(game.get_text_result());
 
-			String input = "";
+			input = "";
 
 			if( !quit ){
-				System.out.print("Play again (y/n) ? ");
+				//System.out.print("Play again (y/n/-p) ? ");
 				repeat = false;
 				do{
 					if( repeat ){
-						System.out.print("Please enter a valid command.  Would you like to play again? (y/n/quit) ");
+						System.out.print("Please enter a valid command. ");
 					}
+					System.out.print("Would you like to play again? (y/n/-p) ");
 					repeat = true;
 					try{
 						input = b.readLine();
@@ -39,9 +62,19 @@ class ConnectFour{
 						System.out.println("IO error!");
 						System.exit(1);
 					}
-//System.out.println(input + " " + quit + " " + input.length() + " " + (input.equals("quit")));
+					if( input.equals("-p") ){
+						repeat = false;
+						if( twop ){
+							System.out.println("Two Player mode disabled.");
+							twop = false;
+						}
+						else{
+							System.out.println("Two Player mode enabled.");
+							twop = true;
+						}
+					}
 				}  while( !(input.equals("quit") || input.equals("n") || input.equals("y")) );
-//System.out.println("k");
+
 				if( input.equals("quit") || input.equals("n") ){
 					quit = true;
 					break;					
@@ -60,7 +93,7 @@ class ConnectFour{
 	
 	
 
-	private static CFBoard play_game(BufferedReader b){
+	private static CFBoard play_game(BufferedReader b, boolean twoP){
 
 		CFBoard my_board;
 		my_board = new CFBoard(8);
@@ -74,7 +107,7 @@ class ConnectFour{
 //			my_board.print_debugging();
 			my_board.print_board();
 
-			if( my_board.get_turn() == 1 ){
+			if( my_board.get_turn() == 1 || twoP ){
 
 				valid = true;
 				next_move = -1;
@@ -188,9 +221,7 @@ class CFBoard{
 				else
 					System.out.print(" ");
 				
-//				if( c < BOARD_SIZE - 1 )
-//				if( c < BOARD_SIZE )
-					System.out.print("|");
+				System.out.print("|");
 
 			}
 			System.out.println();
@@ -298,15 +329,6 @@ class CFBoard{
 					else if( chain_length(tempCo, tempCo2) >= 4 ){
 						redFourIAR.add( tempCo );
 					}
-else{
-	System.out.println("Problem - redTwoIAR : " + chain_length(tempCo, tempCo2));
-/*
-					if( chain_length(tempCo, tempCo2) == 2 ){
-						redTwoIAR.add( new Coord[]{tempCo, tempCo2} );
-						redTwoIAR.add( new Coord[]{tempCo2, tempCo} );
-					}
-*/
-}
 				}
 				if( pairs[1].get_row() == moveMade.get_row() && pairs[1].get_col() == moveMade.get_col() ){
 					tempCo = opposite_side(pairs[1], pairs[0]);
@@ -475,8 +497,6 @@ else{
 
 		}
 
-//System.out.println("_" + first.get_row() + " " + first.get_col() + " , " + second.get_row() + " " + second.get_col() + "___"+result);
-
 		return result;
 
 	}
@@ -632,14 +652,9 @@ else{
 				for( Coord[] triples : blackThreeIAR ){
 
 					if( heights[triples[0].get_col()] == triples[0].get_row() ){
-					//if( triples[0].equals(new Coord
 						priorities.add(triples[0].get_col());
-//System.out.println("Going for win : " + triples[0].get_col() + " _ trip row" + triples[0].get_row() + " , height " + heights[triples[0].get_row()]);
 					}
-/*
-					if( heights[triples[1].get_row()] == triples[1].get_col() )
-						priorities.add(triples[1].get_col());
-*/
+
 				}
 			}
 			
@@ -653,10 +668,7 @@ else{
 
 					if( heights[triples[0].get_col()] == triples[0].get_row() )
 						priorities.add(triples[0].get_col());
-/*
-					if( heights[triples[1].get_row()] == triples[1].get_col() )
-						priorities.add(triples[1].get_col());
-*/
+
 				}
 			}
 
@@ -683,10 +695,7 @@ else{
 						if( !skip )
 							priorities.add(pairs[0].get_col());
 					}
-/*
-					if( heights[triples[1].get_row()] == triples[1].get_col() )
-						priorities.add(triples[1].get_col());
-*/
+
 				}
 			}
 
@@ -722,10 +731,7 @@ else{
 
 						}
 					}
-/*
-					if( heights[triples[1].get_row()] == triples[1].get_col() )
-						priorities.add(triples[1].get_col());
-*/
+
 				}
 			}
 
@@ -733,13 +739,6 @@ else{
 			if( success )
 				return success;
 	
-
-		//RAND
-		//FIX LOGIC
-/*
-			for( int i = 0; i < BOARD_SIZE; i++ )
-				priorities.add(i);
-*/
 
 			ArrayList<Integer> lastResort = new ArrayList<Integer>();
 			ArrayList<Integer> undesirable = new ArrayList<Integer>();
@@ -842,7 +841,6 @@ else{
 				System.out.println(attempt+1);
 				success = make_move(attempt);
 				if( success ) {
-//					System.out.println("BLACK'S TURN : " + attempt);
 					return success;
 				}
 				else

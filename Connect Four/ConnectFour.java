@@ -4,6 +4,7 @@ import java.io.*;
 class ConnectFour{
 
 	public static boolean quit = false;
+	public static boolean twop = false;
 
 	public static void main(String args[]){
 
@@ -11,27 +12,50 @@ class ConnectFour{
 		boolean repeat = false;
 
 		System.out.println();System.out.println();System.out.println();System.out.println();
-		System.out.println("Welcome to ConnectFour! \nColumn numbers are listed above and below the game board. \nJust enter the column number to make a move.\nEnter quit at any time to quit.");
+		System.out.println("Welcome to ConnectFour! \nColumn numbers are listed above and below the game board. \nJust enter the column number to make a move.\nEnter quit at any time to quit.\n");
+
+		String input = "-p";
+
+		while( input.equals("-p") ){
+			System.out.print("\nEnter \"-p\" to toggle between playing against the computer and a human player or press any other key to continue. ");
+			try{
+				input = b.readLine();
+			}catch (IOException ioe) {
+				System.out.println("IO error!");
+				System.exit(1);
+			}
+			if( input.equals("-p") ){
+				if( twop ){
+					System.out.println("Two Player mode disabled.");
+					twop = false;
+				}
+				else{
+					System.out.println("Two Player mode enabled.");
+					twop = true;
+				}
+			}
+		}
 
 		while( !quit ){
 			System.out.println();
 			System.out.println("Starting new game.");
 			System.out.println();
 
-			CFBoard game = play_game(b);
+			CFBoard game = play_game(b, twop);
 			game.print_board();
 
 			System.out.println(game.get_text_result());
 
-			String input = "";
+			input = "";
 
 			if( !quit ){
-				System.out.print("Play again (y/n) ? ");
+				//System.out.print("Play again (y/n/-p) ? ");
 				repeat = false;
 				do{
 					if( repeat ){
-						System.out.print("Please enter a valid command.  Would you like to play again? (y/n/quit) ");
+						System.out.print("Please enter a valid command. ");
 					}
+					System.out.print("Would you like to play again? (y/n/-p) ");
 					repeat = true;
 					try{
 						input = b.readLine();
@@ -39,7 +63,17 @@ class ConnectFour{
 						System.out.println("IO error!");
 						System.exit(1);
 					}
-
+					if( input.equals("-p") ){
+						repeat = false;
+						if( twop ){
+							System.out.println("Two Player mode disabled.");
+							twop = false;
+						}
+						else{
+							System.out.println("Two Player mode enabled.");
+							twop = true;
+						}
+					}
 				}  while( !(input.equals("quit") || input.equals("n") || input.equals("y")) );
 
 				if( input.equals("quit") || input.equals("n") ){
@@ -60,7 +94,7 @@ class ConnectFour{
 	
 	
 
-	private static CFBoard play_game(BufferedReader b){
+	private static CFBoard play_game(BufferedReader b, boolean twoP){
 
 		CFBoard my_board;
 		my_board = new CFBoard(8);
@@ -74,7 +108,7 @@ class ConnectFour{
 //			my_board.print_debugging();
 			my_board.print_board();
 
-			if( my_board.get_turn() == 1 ){
+			if( my_board.get_turn() == 1 || twoP ){
 
 				valid = true;
 				next_move = -1;
