@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<link rel="stylesheet" type="text/css" href="layout.css" />
+	<!--[if lt IE 7]>
+		<!---GO AWAY---!>
+	<![endif]-->
+	<script type="text/javascript">
+		var htimer = 0;
+		function inch(){
+			htimer = htimer + 1;
+		}
+		var ltimer = 0;
+		function incl(){
+			ltimer = ltimer + 1;
+		}
+		var rtimer = 0;
+		function incr(){
+			rtimer = rtimer + 1;
+		}
+		var mtimer = 0;
+		function incm(){
+			mtimer = mtimer + 1;
+		}
+		var ftimer = 0;
+		function incf(){
+			ftimer = ftimer + 1;
+		} 
+		function displayHTag(){
+			document.getElementById("htag").innerHTML=htimer;
+		}
+		function displayLTag(){
+			document.getElementById("ltag").innerHTML=ltimer;
+		}
+		function displayRTag(){
+			document.getElementById("rtag").innerHTML=rtimer;
+		}
+		function displayMTag(){
+			document.getElementById("mtag").innerHTML=mtimer;
+		}
+		function displayFTag(){
+			document.getElementById("footer").innerHTML=ftimer;
+		}
+
+
+	</script>
+
+</head>
+
+<body>
+
+		<div id="header" onmousedown="displayHTag()" onmousemove="inch()">Liquid Layout
+			<h1 id="htag">Timer shows how much mouse movement has happened over each element. Click to refresh!</h1>
+		</div>
+		<div id="left"onmousedown="displayLTag()" onmousemove="incl()">Lorum
+			<h1 id="ltag">Timer</h1>
+		</div>
+		<div id="right"onmousedown="displayRTag()" onmousemove="incr()">Ipson
+			<h1 id="rtag">Timer</h1>
+		</div>		
+		<div id="main"onmousedown="displayMTag()" onmousemove="incm()">Hello!
+			<h1 id="mtag">Timer</h1>
+			<h2>
+				Liquid layouts are extremely valuable for web designers when trying to ensure their web design displays and operates correctly for as many users as possible.  By using one in this situation, I am able to know that people with a 1024x768 will see roughly the same thing as those with 1680x1050 resolutions and I can manage the content and layout accordingly.
+			</h2>
+		</div>
+		<div id="footer"onmousedown="displayFTag()" onmousemove="incf()">Click me too!</div>
+
+
+</body>
+
+</html>

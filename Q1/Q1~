@@ -1,0 +1,43 @@
+How many ping pong balls would it take to fill an average-sized school bus? Describe each step in your thought process.
+
+Without actually looking up any values, I'll try to estimate everything first.  
+
+Ping pong ball: about 1 1/4 inch in diameter
+Average-sized school bus: about 40 feet long, 12 feet high, 10 feet wide, 16 rows (2 seats per row; seats are about 4 feet wide, 1.5 feet long, backs are 3 feet tall, 6 inches thick)
+
+Total bus volume (cubic feet) = 40 * 12 * 10 = 4800
+Total seat volume (cubic feet) = ((4 * 3 * .5) + (4 * 1.5 * .5)) * (16 * 2) = (6 + 3) * 32 = 288
+Total available bus volume (cubic feet) = 4800 - 288 = 4512
+Total available bus volume (cubic inches) = 4512 * (12 ^ 3) = 7796736
+
+If stacked directly on top of each other, each ping pong ball would occuby a square space.  
+So, total volume taken up by each ping pong ball (cubic inches) = 1.25 ^ 3 = 1.953125
+
+With that much space being occupied by each ping pong ball, finding the number of ping pong balls that could fit into the bus is a simple division:
+Total ping pong balls that can fit inside the bus = 7796736 / 1.953125 = 3991928.832
+
+Rounding down, my estimates give about 3,991,928 ping pong balls inside a school bus.  (Which seems...way too high, especially because I know that stacking them on top of each other is one of the most inefficient ways possible.)
+
+Now, to find values.
+
+Ping pong ball (diameter): 40 mm = 1.57480315 inches
+Average-sized school bus: about 40 feet long, 11 feet high, 8 feet wide, 12 rows (2 seats per row; finding seat dimensions is difficult - I've only been able to find a number for the width of a seat, so I'm going to continue to use my original estimates for thickness, length and height - seats are about 39 inches wide, 1.5 feet long, backs are 3 feet tall, 6 inches thick)
+
+Total bus volume (cubic feet) = 40 * 11 * 8 = 3520
+Total seat volume (cubic feet) = ((((3.25 * 3 * .5) + (3.25 * 1.5 * .5)) * (12 * 2) = (4.875 + 2.4375) * 24 = 175.5
+Total available bus volume (cubic feet) = 3520 - 175.5 = 3344.5
+Total available bus volume (cubic inches) = 3344.5 * (12 ^ 3) = 5779296
+
+Total volume taken up by each ping pong ball stacked on top of each other (cubic inches) = 3.905519625
+
+Total ping pong balls that can fit inside the bus = 5779296 / 3.905519625 = 1479776.458683139
+
+Or: 1,479,776.  This seems much more reasonable, though still much higher than I would have initially estimated.  But, as I said above, it is very inefficient.  It is possible to get a density of ~.74048 when packing spheres of equal sizes ("close-packing of equal spheres").
+
+To find out about how many ping pong balls can theoretically be packed in using this method, we need to find the area taken up by a single ping pong ball:
+Total area of a ping pong ball (cubic inches) = (4/3) pi * ((1.57480315 / 2) ^3) = 2.044864984
+
+With 100% packing efficiency: 5779296 / 2.044864984 = 2826248.209647078
+But we can only get about 74.048%: 2967114.082054959 * 0.74048 = 2092780.274279468
+
+So, with the highest theoretically possible density, about 2,092,780 ping pong balls can be jammed into a school bus.
