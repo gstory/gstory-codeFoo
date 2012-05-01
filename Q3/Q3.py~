@@ -105,9 +105,9 @@ while( True ) :
 	plates[3] = excess
 
 
-	if( numPlates == 0 and pop <= 10 ) :
+	if( numPlates == 0 and pop <= 10 and strict ) :
 		plates[0] = 1
-	elif( numPlates == 0 and pop <= 26 ) :
+	elif( numPlates == 0 and pop <= 26 and strict ) :
 		plates[1] = 1
 	elif( numPlates == 0 and pop <= 36 ) :
 		plates[2] = 1
